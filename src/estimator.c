@@ -48,13 +48,7 @@ void updateEstimator(StateEstimator *estimator, const SensorData *sensorData, do
     double x_pred_alt = estimator->verticalFilter.state[0] + (estimator->verticalFilter.state[1] * dt) + (0.5 * accelZ * dt * dt);
     double x_pred_vel = estimator->verticalFilter.state[1] + (accelZ * dt);
 
-    // Predict covariance: P = F * P * F' + Q
-    // F * P = [[1, dt], [0, 1]] * [[p00, p01], [p10, p11]] 
-    //      = [[p00 + dt*p10, p01 + dt*p11], [p10, p11]]
-    // (F * P) * F' = [[p00 + dt*p10, p01 + dt*p11], [p10, p11]] * [[1, 0], [dt, 1]]
-    //              = [[p00 + dt*p10 + dt*(p01 + dt*p11), p01 + dt*p11], [p10 + dt*p11, p11]] -- wait, mistake in my manual calc before.
-    
-    // Let's do it properly and carefully.
+    // Predict covariance
     double p00 = estimator->verticalFilter.covariance[0][0];
     double p01 = estimator->verticalFilter.covariance[0][1];
     double p10 = estimator->verticalFilter.covariance[1][0];

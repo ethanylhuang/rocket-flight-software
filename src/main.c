@@ -38,7 +38,7 @@ int main() {
             // For a simple test, let's just set baro to something plausible.
         } else if (i >= 60) {
             // Coasting/Descending
-            trueAccelZ = 0.0;
+            trueAccelZ = -9.81; // cuz gravity
             sensors.imu.accel.z = trueAccelZ + 9.81; // No more thrust
         }
 
